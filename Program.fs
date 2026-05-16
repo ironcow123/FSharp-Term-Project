@@ -8,6 +8,7 @@ open YachtDice.Action
 let rec gameloop (gameState: GameState) = //every turn calls gameloop with updated gameState until game over
     if isGameOver gameState then
         let finalScore = calculateFinalScore gameState.Scores
+        printfn ""
         printfn "Game Over! Your final score is: %d" finalScore
         exitMessage()
     else 

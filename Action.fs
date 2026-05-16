@@ -7,8 +7,6 @@ open YachtDice.UI
 open YachtDice.Helper
 
 let rec runRollDice(gamestate: GameState): GameState =
-    printfn "You have %d rolls left" gamestate.RollCount
-    printfn ""
     match System.Console.ReadLine() with
     | "1" when gamestate.RollCount > 0 -> 
         clearLastLine()
@@ -16,6 +14,7 @@ let rec runRollDice(gamestate: GameState): GameState =
         let rerollIndices = inputToIntList()
         if List.isEmpty rerollIndices then
             printfn "No dice selected for reroll. Please try again."
+            decideReroll gamestate
             runRollDice gamestate
         else if isValidReroll gamestate.Dice rerollIndices then 
             let newDice = rerollDice gamestate.Dice rerollIndices
@@ -29,14 +28,18 @@ let rec runRollDice(gamestate: GameState): GameState =
             runRollDice gamestate
     | "1" -> 
         clearLastLine()
+        printfn ""
         printfn "You have no rolls left. Please choose a category to score."; //hold
         gamestate
     | "2" -> 
         clearLastLine()
+        printfn ""
         printfn "You decided to hold. Please choose a category to score."
         gamestate
     | _ -> 
         printfn "Invalid input. Please try again."
+        showDice gamestate.Dice
+        decideReroll gamestate
         runRollDice gamestate
 
 let rec runGameMenu(gamestate: GameState): GameState =
