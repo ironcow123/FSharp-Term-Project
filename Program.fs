@@ -27,6 +27,7 @@ let main argv =
             gameloop(initGameState())
         | "2" -> 
             clearLastLine()
+            printfn ""
             exitMessage()
         | _ -> 
             clearLastLine()

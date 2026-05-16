@@ -26,8 +26,8 @@ let initMenu() =
     printfn "2. Exit"
 
 let exitMessage() =
-    printfn ""
     printfn "Thank you for playing Yacht Dice KAIST Edition! I hope you enjoyed it!"
+    printfn ""
     Thread.Sleep(1500)
     exit 0
 

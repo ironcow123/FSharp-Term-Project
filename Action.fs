@@ -10,19 +10,22 @@ let rec runRollDice(gamestate: GameState): GameState =
     match System.Console.ReadLine() with
     | "1" when gamestate.RollCount > 0 -> 
         clearLastLine()
+        printfn ""
         printfn "You decided to reroll. Please enter the indices of the dice you want to reroll, separated by spaces:"
         let rerollIndices = inputToIntList()
         if List.isEmpty rerollIndices then
             printfn "No dice selected for reroll. Please try again."
             decideReroll gamestate
             runRollDice gamestate
-        else if isValidReroll gamestate.Dice rerollIndices then 
+        else if isValidReroll gamestate.Dice rerollIndices then //valid case
             let newDice = rerollDice gamestate.Dice rerollIndices
+            printfn ""
             showDice newDice
             let newGameState = {gamestate with Dice = newDice; RollCount = gamestate.RollCount - 1}
             decideReroll newGameState
             runRollDice newGameState
         else 
+            printfn ""
             printfn "Invalid input. Please try again."
             decideReroll gamestate
             runRollDice gamestate
@@ -56,7 +59,9 @@ let rec runGameMenu(gamestate: GameState): GameState =
                 clearLastLine()
                 showScores gamestate.Scores
                 runGameMenu gamestate
-            | "3" -> exitMessage()
+            | "3" ->
+                clearLastLine() 
+                exitMessage()
             | _ -> 
                 clearLastLine()
                 printfn "Invalid input. Please try again."
