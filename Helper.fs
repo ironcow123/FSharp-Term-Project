@@ -2,6 +2,12 @@ module YachtDice.Helper
 
 open System
 
+let clearLastLine () = // Clear the last line in the console for better UI experience when rerolling dice
+    if Console.CursorTop > 0 then
+        Console.SetCursorPosition(0, Console.CursorTop - 1)
+        printfn "%s" (String.replicate Console.WindowWidth " ")
+        Console.SetCursorPosition(0, Console.CursorTop - 1)
+
 let rec removeFirst (x: int) (list: int list) =
     match list with
         | [] -> []
@@ -20,23 +26,22 @@ let rec inputToIntList() : int list =
             | true, v -> Some v
             | _ -> None)
     if parsedOptions |> List.exists Option.isNone then
+        clearLastLine()
         printfn "Invalid input. Please enter valid integers separated by spaces."
         inputToIntList() //recursively call until valid input is given
     else 
         let numberList = parsedOptions |> List.choose id // extract the valid integers from the options
         if numberList |> List.exists (fun x -> x < 1 || x > 6) then
+            clearLastLine()
             printfn "Invalid input. Please enter integers between 1 and 6 separated by spaces."
             inputToIntList() //recursively call until valid input is given
         else if List.length numberList > 5 then
+            clearLastLine()
             printfn "Invalid input. Please enter at most 5 integers separated by spaces."
             inputToIntList() //recursively call until valid input is given
         else numberList
 
-let clearLastLine () = // Clear the last line in the console for better UI experience when rerolling dice
-    if Console.CursorTop > 0 then
-        Console.SetCursorPosition(0, Console.CursorTop - 1)
-        printfn "%s" (String.replicate Console.WindowWidth " ")
-        Console.SetCursorPosition(0, Console.CursorTop - 1)
+
 
 
 
