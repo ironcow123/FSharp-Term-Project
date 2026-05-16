@@ -22,9 +22,17 @@ let scoreFullHouse (dice: Dice) : Score =
     if (dice |> List.countBy id |> List.exists (fun (value, count) -> count = 3) &&
        dice |> List.countBy id |> List.exists (fun (value, count) -> count = 2)) || 
        (dice |> List.countBy id |> List.exists (fun (value, count) -> count = 5)) then List.sum dice else 0
+//let scoreSmallStraight (dice: Dice) : Score =
+//    let sortedDice =dice |> List.sort |> List.distinct
+//    if (sortedDice = [1; 2; 3; 4]) || (sortedDice = [2; 3; 4; 5]) || (sortedDice = [3; 4; 5; 6]) then 15 else 0
 let scoreSmallStraight (dice: Dice) : Score =
-    let sortedDice =dice |> List.sort |> List.distinct
-    if (sortedDice = [1; 2; 3; 4]) || (sortedDice = [2; 3; 4; 5]) || (sortedDice = [3; 4; 5; 6]) then 15 else 0
+    let sortedDice = dice |> List.sort |> List.distinct
+    let containsSubList (target: int list) = 
+        target |> List.forall (fun x -> List.contains x sortedDice)        
+    if containsSubList [1; 2; 3; 4] || 
+       containsSubList [2; 3; 4; 5] || 
+       containsSubList [3; 4; 5; 6] then 15 
+    else 0
 
 let scoreLargeStraight (dice: Dice) : Score =
     let sortedDice =dice |> List.sort |> List.distinct

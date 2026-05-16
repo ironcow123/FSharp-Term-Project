@@ -21,10 +21,16 @@ let main argv =
     let rec runmenu() =
         initMenu()
         match System.Console.ReadLine() with
-        | "1" -> gameloop(initGameState())
-        | "2" -> exitMessage()
+        | "1" ->
+            clearLastLine() 
+            gameloop(initGameState())
+        | "2" -> 
+            clearLastLine()
+            exitMessage()
         | _ -> 
+            clearLastLine()
             printfn "Invalid input. Please try again."
+            printfn ""
             runmenu()
     runmenu()
     0 //return 0

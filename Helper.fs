@@ -33,9 +33,10 @@ let rec inputToIntList() : int list =
         else numberList
 
 let clearLastLine () = // Clear the last line in the console for better UI experience when rerolling dice
-    Console.SetCursorPosition(0, Console.CursorTop - 1)
-    printfn "%s" (String.replicate Console.WindowWidth " ")
-    Console.SetCursorPosition(0, Console.CursorTop - 1)
+    if Console.CursorTop > 0 then
+        Console.SetCursorPosition(0, Console.CursorTop - 1)
+        printfn "%s" (String.replicate Console.WindowWidth " ")
+        Console.SetCursorPosition(0, Console.CursorTop - 1)
 
 
 
